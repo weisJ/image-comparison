@@ -169,7 +169,7 @@ public final class ImageComparisonUtil {
                 diff += pixelDiff(img1.getRGB(x, y), img2.getRGB(x, y));
             }
         }
-        long maxDiff = 3L * 255 * width * height;
+        long maxDiff = 4L * 255 * width * height;
 
         return (float) (100.0 * diff / maxDiff);
     }
@@ -182,12 +182,14 @@ public final class ImageComparisonUtil {
      * @return the difference.
      */
     public static int pixelDiff(int rgb1, int rgb2) {
+        int a1 = (rgb1 >> 24) & 0xff;
         int r1 = (rgb1 >> 16) & 0xff;
         int g1 = (rgb1 >> 8) & 0xff;
         int b1 = rgb1 & 0xff;
+        int a2 = (rgb2 >> 24) & 0xff;
         int r2 = (rgb2 >> 16) & 0xff;
         int g2 = (rgb2 >> 8) & 0xff;
         int b2 = rgb2 & 0xff;
-        return Math.abs(r1 - r2) + Math.abs(g1 - g2) + Math.abs(b1 - b2);
+        return Math.abs(r1 - r2) + Math.abs(g1 - g2) + Math.abs(b1 - b2) + Math.abs(a1 - a2);
     }
 }

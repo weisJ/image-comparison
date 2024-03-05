@@ -129,11 +129,6 @@ public class ImageComparison {
     private boolean drawExcludedRectangles = false;
 
     /**
-     * The difference in percent between two images.
-     */
-    private float differencePercent;
-
-    /**
      * Flag for filling comparison difference rectangles.
      */
     private boolean fillDifferenceRectangles = false;
@@ -284,15 +279,20 @@ public class ImageComparison {
             return true;
         }
 
+        int alpha1 = (expectedRgb >> 24) & 0xff;
         int red1 = (expectedRgb >> 16) & 0xff;
         int green1 = (expectedRgb >> 8) & 0xff;
         int blue1 = (expectedRgb) & 0xff;
+
+        int alpha2 = (actualRgb >> 24) & 0xff;
         int red2 = (actualRgb >> 16) & 0xff;
         int green2 = (actualRgb >> 8) & 0xff;
         int blue2 = (actualRgb) & 0xff;
 
-        return (Math.pow(red2 - red1, 2) + Math.pow(green2 - green1, 2)
-                + Math.pow(blue2 - blue1, 2)) > differenceConstant;
+        return (Math.pow(red2 - red1, 2)
+                + Math.pow(green2 - green1, 2)
+                + Math.pow(blue2 - blue1, 2)
+                + Math.pow(alpha2 - alpha1, 2)) > differenceConstant;
     }
 
     /**
@@ -595,7 +595,7 @@ public class ImageComparison {
     }
 
     private double calculateDifferenceConstant() {
-        return Math.pow(pixelToleranceLevel * Math.sqrt(Math.pow(255, 2) * 3), 2);
+        return Math.pow(pixelToleranceLevel * Math.sqrt(Math.pow(255, 2) * 4), 2);
     }
 
     public boolean isDrawExcludedRectangles() {
