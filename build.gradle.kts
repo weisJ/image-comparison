@@ -255,7 +255,7 @@ allprojects {
                         licenses {
                             license {
                                 name.set("MIT")
-                                url.set("https://github.com/jsvg/image-comparison/blob/master/LICENSE")
+                                url.set("https://github.com/weisj/image-comparison/blob/master/LICENSE")
                                 distribution.set("repo")
                             }
                         }
