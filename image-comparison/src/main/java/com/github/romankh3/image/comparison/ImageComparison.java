@@ -1,19 +1,40 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2024 Jannis Weis
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ */
 package com.github.romankh3.image.comparison;
+
+import static com.github.romankh3.image.comparison.ImageComparisonUtil.getDifferencePercent;
+import static java.util.Collections.emptyList;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.github.romankh3.image.comparison.model.ExcludedAreas;
 import com.github.romankh3.image.comparison.model.ImageComparisonResult;
 import com.github.romankh3.image.comparison.model.ImageComparisonState;
 import com.github.romankh3.image.comparison.model.Rectangle;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.List;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import static com.github.romankh3.image.comparison.ImageComparisonUtil.getDifferencePercent;
-import static java.util.Collections.emptyList;
 
 /**
  * Main class for comparison images.
@@ -194,7 +215,8 @@ public class ImageComparison {
         // check that the images have the same size
         if (isImageSizesNotEqual(expected, actual)) {
             BufferedImage actualResized = ImageComparisonUtil.resize(actual, expected.getWidth(), expected.getHeight());
-            return ImageComparisonResult.defaultSizeMisMatchResult(expected, actual, getDifferencePercent(actualResized, expected));
+            return ImageComparisonResult.defaultSizeMisMatchResult(expected, actual,
+                    getDifferencePercent(actualResized, expected));
         }
 
         List<Rectangle> rectangles = populateRectangles();
@@ -269,8 +291,8 @@ public class ImageComparison {
         int green2 = (actualRgb >> 8) & 0xff;
         int blue2 = (actualRgb) & 0xff;
 
-        return (Math.pow(red2 - red1, 2) + Math.pow(green2 - green1, 2) + Math.pow(blue2 - blue1, 2))
-                > differenceConstant;
+        return (Math.pow(red2 - red1, 2) + Math.pow(green2 - green1, 2)
+                + Math.pow(blue2 - blue1, 2)) > differenceConstant;
     }
 
     /**
@@ -473,8 +495,7 @@ public class ImageComparison {
                 rectangle.getMinPoint().x,
                 rectangle.getMinPoint().y,
                 rectangle.getWidth() - 1,
-                rectangle.getHeight() - 1)
-        );
+                rectangle.getHeight() - 1));
     }
 
     /**
@@ -491,14 +512,12 @@ public class ImageComparison {
         graphics.setColor(new Color(graphics.getColor().getRed(),
                 graphics.getColor().getGreen(),
                 graphics.getColor().getBlue(),
-                (int) (percentOpacity / 100 * 255)
-        ));
+                (int) (percentOpacity / 100 * 255)));
         rectangles.forEach(rectangle -> graphics.fillRect(
                 rectangle.getMinPoint().x - 1,
                 rectangle.getMinPoint().y - 1,
                 rectangle.getWidth() - 2,
-                rectangle.getHeight() - 2)
-        );
+                rectangle.getHeight() - 2));
     }
 
 

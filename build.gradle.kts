@@ -1,4 +1,4 @@
-import com.diffplug.spotless.extra.wtp.EclipseWtpFormatterStep
+
 import com.github.vlsi.gradle.crlf.CrLfSpec
 import com.github.vlsi.gradle.crlf.LineEndings
 import com.github.vlsi.gradle.properties.dsl.props
