@@ -7,6 +7,7 @@ plugins {
 dependencies {
     compileOnly(libs.nullabilityAnnotations)
 
+    testImplementation(testLibs.mockito)
     testImplementation(testLibs.junit.api)
     testRuntimeOnly(testLibs.junit.engine)
     testCompileOnly(libs.nullabilityAnnotations)

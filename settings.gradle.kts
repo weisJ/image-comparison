@@ -39,6 +39,7 @@ dependencyResolutionManagement {
                 idv("api", "org.junit.jupiter:junit-jupiter-api")
                 idv("engine", "org.junit.jupiter:junit-jupiter-engine")
             }
+            idv("mockito", "org.mockito:mockito-core")
         }
     }
 }
